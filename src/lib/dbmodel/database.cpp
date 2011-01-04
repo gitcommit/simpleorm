@@ -120,3 +120,35 @@ TableColumn* Database::tableColumn(const String& namePath) const {
 TableColumnMap Database::tableColumns() const {
     return _tableColumns;
 }
+
+UniqueConstraint* Database::add(UniqueConstraint* u) {
+    BOOST_ASSERT(0 != u);
+    _uniqueConstraints.insert(std::make_pair(u->pathString(), u));
+    return uniqueConstraint(u->pathString());
+}
+
+UniqueConstraint* Database::uniqueConstraint(const String& namePath) const {
+    UniqueConstraintMapConstIterator i = _uniqueConstraints.find(namePath);
+    BOOST_ASSERT(i != _uniqueConstraints.end());
+    return i->second;
+}
+
+UniqueConstraintMap Database::uniqueConstraints() const {
+    return _uniqueConstraints;
+}
+
+PrimaryKeyConstraint* Database::add(PrimaryKeyConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    _primaryKeyConstraints.insert(std::make_pair(c->pathString(), c));
+    return primaryKeyConstraint(c->pathString());
+}
+
+PrimaryKeyConstraint* Database::primaryKeyConstraint(const String& namePath) const {
+    PrimaryKeyConstraintMapConstIterator i = _primaryKeyConstraints.find(namePath);
+    BOOST_ASSERT(i != _primaryKeyConstraints.end());
+    return i->second;
+}
+
+PrimaryKeyConstraintMap Database::primaryKeyConstraints() const {
+    return _primaryKeyConstraints;
+}

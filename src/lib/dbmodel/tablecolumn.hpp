@@ -14,6 +14,7 @@ class DataType;
 class DatabaseConstant;
 class Sequence;
 class DefaultGenerator;
+class NotNullConstraint;
 
 class TableColumn: public InTableComponent {
 public:
@@ -32,12 +33,16 @@ public:
     
     virtual bool hasDefault() const;
     DefaultGenerator* defaultGenerator() const;
+
+    virtual bool hasNotNullConstraint() const;
+    NotNullConstraint* notNullConstraint() const;
+    virtual NotNullConstraint* createNotNullConstraint();
     
     virtual void visit(ComponentVisitor* v);
 private:
     DataType* _type;
     DefaultGenerator* _defaultGenerator;
-
+    NotNullConstraint* _notNullConstraint;
 };
 
 typedef std::map<String, TableColumn*> TableColumnMap;

@@ -31,13 +31,23 @@ public:
     TableMap tables() const;
 
     TableColumn* add(TableColumn* c);
-    TableColumn* tableColumn(const String& qualifiedName);
+    TableColumn* tableColumn(const String& qualifiedName) const;
     TableColumnMap tableColumns() const;
-    
+
+    UniqueConstraint* add(UniqueConstraint* c);
+    UniqueConstraint* uniqueConstraint(const String& qualifiedName) const;
+    UniqueConstraintMap uniqueConstraints() const;
+
+    PrimaryKeyConstraint* add(PrimaryKeyConstraint* c);
+    PrimaryKeyConstraint* primaryKeyConstraint(const String& qualifiedName) const;
+    PrimaryKeyConstraintMap primaryKeyConstraints() const;
+
 private:
     SequenceMap _sequences;
     TableMap _tables;
     TableColumnMap _tableColumns;
+    UniqueConstraintMap _uniqueConstraints;
+    PrimaryKeyConstraintMap _primaryKeyConstraints;
 };
 
 typedef std::map<String, Schema*> SchemaMap;

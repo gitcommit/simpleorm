@@ -23,12 +23,16 @@ FGeoDatabase::FGeoDatabase(const std::string& name)
     _core->createSequence("seq_unit_conversions");
 
     _siPrefixes = _core->createTable("si_prefixes");
-    _siPrefixes->createTableColumn("id", _int)->createDefault(_core->createSequence("seq_si_prefixes"));
-    _siPrefixes->createTableColumn("name", _text)->createDefault("New SI Prefix");
-    _siPrefixes->createTableColumn("core", _code)->createDefault(_null);
+    _siPrefixes->createTableColumn("id", _int, true)->createDefault(_core->createSequence("seq_si_prefixes"));
+    _siPrefixes->createTableColumn("name", _text, "New SI Prefix");
+    _siPrefixes->createTableColumn("core", _code, _null);
     _siPrefixes->createTableColumn("symbol", _text);
-    _siPrefixes->createTableColumn("factor", _numeric)->createDefault(1.0);
-    _siPrefixes->createTableColumn("description", _text)->createDefault("");
+    _siPrefixes->createTableColumn("factor", _numeric, 1.0);
+    _siPrefixes->createTableColumn("description", _text, "");
+    _siPrefixes->createUniqueConstraint("u_si_prefixes_name")->add("name");
+    _siPrefixes->createUniqueConstraint("u_si_prefixes_factor")->add("factor");
+    _siPrefixes->createUniqueConstraint("u_si_prefixes_symbol")->add("symbol");
+    _siPrefixes->createPrimaryKeyConstraint("pk_si_prefixes")->add("id");
     
     _units = _core->createTable("units");
     _unitConversions = _core->createTable("unit_convesions");

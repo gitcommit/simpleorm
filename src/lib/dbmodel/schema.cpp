@@ -13,7 +13,7 @@ Schema::Schema(Database* db, const String& name)
 }
 
 Schema::Schema(const Schema& o)
-: InDatabaseComponent(o) {
+: InDatabaseComponent(o), _tables(o._tables), _tableColumns(o._tableColumns) {
 }
 
 Schema::~Schema() {
@@ -69,7 +69,7 @@ TableColumn* Schema::add(TableColumn* c) {
     return tableColumn(c->qualifiedName());
 }
 
-TableColumn* Schema::tableColumn(const String& qualifiedName) {
+TableColumn* Schema::tableColumn(const String& qualifiedName) const {
     TableColumnMapConstIterator i = _tableColumns.find(qualifiedName);
     BOOST_ASSERT(i != _tableColumns.end());
     return i->second;
@@ -77,4 +77,38 @@ TableColumn* Schema::tableColumn(const String& qualifiedName) {
 
 TableColumnMap Schema::tableColumns() const {
     return _tableColumns;
+}
+
+UniqueConstraint* Schema::add(UniqueConstraint* u) {
+    BOOST_ASSERT(0 != u);
+    _uniqueConstraints.insert(std::make_pair(u->qualifiedName(), u));
+    database()->add(u);
+    return u;
+}
+
+UniqueConstraint* Schema::uniqueConstraint(const String& qualifiedName) const {
+    UniqueConstraintMapConstIterator i = _uniqueConstraints.find(qualifiedName);
+    BOOST_ASSERT(i != _uniqueConstraints.end());
+    return i->second;
+}
+
+UniqueConstraintMap Schema::uniqueConstraints() const {
+    return _uniqueConstraints;
+}
+
+PrimaryKeyConstraint* Schema::add(PrimaryKeyConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    _primaryKeyConstraints.insert(std::make_pair(c->qualifiedName(), c));
+    database()->add(c);
+    return c;
+}
+
+PrimaryKeyConstraint* Schema::primaryKeyConstraint(const String& qualifiedName) const {
+    PrimaryKeyConstraintMapConstIterator i = _primaryKeyConstraints.find(qualifiedName);
+    BOOST_ASSERT(i != _primaryKeyConstraints.end());
+    return i->second;
+}
+
+PrimaryKeyConstraintMap Schema::primaryKeyConstraints() const {
+    return _primaryKeyConstraints;
 }

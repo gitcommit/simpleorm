@@ -7,18 +7,19 @@
 #include <dbmodel/databaseconstantdefaultgenerator.hpp>
 #include <dbmodel/numericdefaultgenerator.hpp>
 #include <dbmodel/textdefaultgenerator.hpp>
+#include <dbmodel/notnullconstraint.hpp>
 
 #include <boost/assert.hpp>
 
 #include <iostream>
 
 TableColumn::TableColumn(Table* tbl, const String& name, DataType* t)
-: InTableComponent(tbl, name), _type(t), _defaultGenerator(0) {
+: InTableComponent(tbl, name), _type(t), _defaultGenerator(0), _notNullConstraint(0) {
     tbl->add(this);
 }
 
 TableColumn::TableColumn(const TableColumn& o)
-: InTableComponent(o), _type(o._type), _defaultGenerator(o._defaultGenerator) {
+: InTableComponent(o), _type(o._type), _defaultGenerator(o._defaultGenerator), _notNullConstraint(o._notNullConstraint) {
 }
 
 TableColumn::~TableColumn() {
@@ -71,4 +72,18 @@ DefaultGenerator* TableColumn::defaultGenerator() const {
 
 bool TableColumn::hasDefault() const {
     return (0 != defaultGenerator());
+}
+
+bool TableColumn::hasNotNullConstraint() const {
+    return (0 != _notNullConstraint);
+}
+
+NotNullConstraint* TableColumn::notNullConstraint() const {
+    BOOST_ASSERT(0 != _notNullConstraint);
+    return _notNullConstraint;
+}
+
+NotNullConstraint* TableColumn::createNotNullConstraint() {
+    _notNullConstraint = new NotNullConstraint(this);
+    return notNullConstraint();
 }

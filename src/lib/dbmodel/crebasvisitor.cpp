@@ -81,6 +81,16 @@ void CrebasVisitor::perform(Database* d) {
     for (TableColumnMapConstIterator i = tcm.begin(); i != tcm.end(); ++i) {
         i->second->visit(this);
     }
+
+    UniqueConstraintMap ucm = d->uniqueConstraints();
+    for (UniqueConstraintMapConstIterator i = ucm.begin(); i != ucm.end(); ++i) {
+        i->second->visit(this);
+    }
+
+    PrimaryKeyConstraintMap pcm = d->primaryKeyConstraints();
+    for (PrimaryKeyConstraintMapConstIterator i = pcm.begin(); i != pcm.end(); ++i) {
+        i->second->visit(this);
+    }
 }
 
 void CrebasVisitor::perform(DataType* t) {
@@ -120,4 +130,27 @@ void CrebasVisitor::perform(TableColumn* c) {
     if (c->hasDefault()) {
         c->defaultGenerator()->visit(this);
     }
+    if (c->hasNotNullConstraint()) {
+        c->notNullConstraint()->visit(this);
+    }
+}
+
+void CrebasVisitor::perform(NotNullConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    add(command("ALTER TABLE " + c->tableColumn()->table()->qualifiedName()
+            + " ALTER COLUMN " + c->tableColumn()->name() + " SET NOT NULL"));
+}
+
+void CrebasVisitor::perform(UniqueConstraint* u) {
+    BOOST_ASSERT(0 != u);
+    add(command("ALTER TABLE " + u->table()->qualifiedName()
+            + " ADD CONSTRAINT " + u->name() + " UNIQUE ("
+            + u->joinedColumnNames() + ")"));
+}
+
+void CrebasVisitor::perform(PrimaryKeyConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    add(command("ALTER TABLE " + c->table()->qualifiedName()
+            + " ADD CONSTRAINT " + c->name() + " PRIMARY KEY ("
+            + c->joinedColumnNames() + ")"));
 }

@@ -15,10 +15,13 @@
 #include <dbmodel/sequence.hpp>
 #include <dbmodel/table.hpp>
 #include <dbmodel/tablecolumn.hpp>
+#include <dbmodel/uniqueconstraint.hpp>
+#include <dbmodel/primarykeyconstraint.hpp>
 
-#include "databaseconstant.hpp"
+class PrimaryKeyConstraint;
+typedef std::map<String, PrimaryKeyConstraint*> PrimaryKeyConstraintMap;
 
-class Database: public Component {
+class Database : public Component {
 public:
     Database(const String& name);
     Database(const Database& orig);
@@ -33,7 +36,7 @@ public:
     DatabaseConstant* databaseConstant(const String& name) const;
     DatabaseConstant* createDatabaseConstant(const String& name, DataType* t);
     DatabaseConstantMap databaseConstants() const;
-    
+
     virtual Schema* add(Schema* s);
     Schema* schema(const String& name) const;
     Schema* createSchema(const String& name);
@@ -50,7 +53,15 @@ public:
     virtual TableColumn* add(TableColumn* c);
     virtual TableColumn* tableColumn(const String& namePath) const;
     TableColumnMap tableColumns() const;
-    
+
+    virtual UniqueConstraint* add(UniqueConstraint* c);
+    virtual UniqueConstraint* uniqueConstraint(const String& namePath) const;
+    UniqueConstraintMap uniqueConstraints() const;
+
+    virtual PrimaryKeyConstraint* add(PrimaryKeyConstraint* c);
+    virtual PrimaryKeyConstraint* primaryKeyConstraint(const String& namePath) const;
+    PrimaryKeyConstraintMap primaryKeyConstraints() const;
+
     virtual void visit(ComponentVisitor* v);
 private:
     DataTypeMap _dataTypes;
@@ -59,6 +70,8 @@ private:
     TableMap _tables;
     DatabaseConstantMap _databaseConstants;
     TableColumnMap _tableColumns;
+    UniqueConstraintMap _uniqueConstraints;
+    PrimaryKeyConstraintMap _primaryKeyConstraints;
 };
 
 #endif	/* DATABASE_HPP */

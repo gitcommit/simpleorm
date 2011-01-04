@@ -8,6 +8,7 @@
 #ifndef COMPONENTVISITOR_HPP
 #define	COMPONENTVISITOR_HPP
 
+class TableColumn;
 class Component;
 class Database;
 class DataType;
@@ -17,6 +18,9 @@ class Table;
 class DatabaseConstant;
 class DefaultGenerator;
 class TableColumn;
+class NotNullConstraint;
+class UniqueConstraint;
+class PrimaryKeyConstraint;
 
 class ComponentVisitor {
 public:
@@ -32,6 +36,9 @@ public:
     virtual void perform(DatabaseConstant* c) = 0;
     virtual void perform(DefaultGenerator* g) = 0;
     virtual void perform(TableColumn* c) = 0;
+    virtual void perform(NotNullConstraint* c) = 0;
+    virtual void perform(UniqueConstraint* c) = 0;
+    virtual void perform(PrimaryKeyConstraint* c) = 0;
 };
 
 #endif	/* COMPONENTVISITOR_HPP */

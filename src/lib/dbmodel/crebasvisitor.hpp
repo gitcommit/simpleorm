@@ -8,11 +8,17 @@
 #ifndef CREBASVISITOR_HPP
 #define	CREBASVISITOR_HPP
 
+#include "notnullconstraint.hpp"
+
+
 #include <dbmodel/componentvisitor.hpp>
 
 #include <dbmodel/component.hpp>
 
 #include "defaultgenerator.hpp"
+#include "uniqueconstraint.hpp"
+#include "primarykeyconstraint.hpp"
+#include "table.hpp"
 
 class Database;
 class DataType;
@@ -33,6 +39,9 @@ public:
     virtual void perform(Table* t);
     virtual void perform(DefaultGenerator* g);
     virtual void perform(TableColumn* c);
+    virtual void perform(NotNullConstraint* c);
+    virtual void perform(UniqueConstraint* c);
+    virtual void perform(PrimaryKeyConstraint* c);
 protected:
     virtual void add(const String& res);
     virtual String comment(const String& s) const;

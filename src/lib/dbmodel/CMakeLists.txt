@@ -18,6 +18,11 @@ set(libdbmodel_SRC
         intablecolumncomponent.cpp
         numericdefaultgenerator.cpp
         textdefaultgenerator.cpp
+        columnconstraint.cpp
+        notnullconstraint.cpp
+        tableconstraint.cpp
+        uniqueconstraint.cpp
+        primarykeyconstraint.cpp
 )
 
 INCLUDE_DIRECTORIES(.. . ~/usr/boost/include)
