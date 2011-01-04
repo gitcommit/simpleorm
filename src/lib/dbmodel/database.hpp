@@ -9,14 +9,56 @@
 #define	DATABASE_HPP
 
 #include <dbmodel/component.hpp>
+#include <dbmodel/datatype.hpp>
+#include <dbmodel/databaseconstant.hpp>
+#include <dbmodel/schema.hpp>
+#include <dbmodel/sequence.hpp>
+#include <dbmodel/table.hpp>
+#include <dbmodel/tablecolumn.hpp>
+
+#include "databaseconstant.hpp"
 
 class Database: public Component {
 public:
     Database(const String& name);
     Database(const Database& orig);
     virtual ~Database();
-private:
 
+    virtual DataType* add(DataType* t);
+    DataType* dataType(const String& name);
+    DataType* createDataType(const String& name, const String& sqlName);
+    DataTypeMap dataTypes() const;
+
+    virtual DatabaseConstant* add(DatabaseConstant* c);
+    DatabaseConstant* databaseConstant(const String& name) const;
+    DatabaseConstant* createDatabaseConstant(const String& name, DataType* t);
+    DatabaseConstantMap databaseConstants() const;
+    
+    virtual Schema* add(Schema* s);
+    Schema* schema(const String& name) const;
+    Schema* createSchema(const String& name);
+    SchemaMap schemata() const;
+
+    virtual Sequence* add(Sequence* s);
+    virtual Sequence* sequence(const String& qualifiedName) const;
+    SequenceMap sequences() const;
+
+    virtual Table* add(Table* t);
+    virtual Table* table(const String& name) const;
+    TableMap tables() const;
+
+    virtual TableColumn* add(TableColumn* c);
+    virtual TableColumn* tableColumn(const String& namePath) const;
+    TableColumnMap tableColumns() const;
+    
+    virtual void visit(ComponentVisitor* v);
+private:
+    DataTypeMap _dataTypes;
+    SchemaMap _schemata;
+    SequenceMap _sequences;
+    TableMap _tables;
+    DatabaseConstantMap _databaseConstants;
+    TableColumnMap _tableColumns;
 };
 
 #endif	/* DATABASE_HPP */

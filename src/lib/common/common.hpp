@@ -15,6 +15,7 @@ typedef std::string String;
 typedef std::vector<String> StringVector;
 typedef StringVector::const_iterator StringVectorConstIterator;
 typedef StringVector::iterator StringVectorIterator;
+typedef double Numeric;
 
 #endif	/* COMMON_HPP */
 

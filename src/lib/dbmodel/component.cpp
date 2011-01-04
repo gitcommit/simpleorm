@@ -1,5 +1,5 @@
-#include <component.hpp>
-#include <componentvisitor.hpp>
+#include <dbmodel/component.hpp>
+#include <dbmodel/componentvisitor.hpp>
 
 #include <boost/assert.hpp>
 
@@ -99,7 +99,7 @@ String Component::pathString(const String& sep) const {
     }
     return ret;
 }
-
+/*
 void Component::visit(ComponentVisitor* v) {
     v->perform(this);
-}
+}*/

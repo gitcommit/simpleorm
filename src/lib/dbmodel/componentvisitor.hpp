@@ -9,6 +9,14 @@
 #define	COMPONENTVISITOR_HPP
 
 class Component;
+class Database;
+class DataType;
+class Schema;
+class Sequence;
+class Table;
+class DatabaseConstant;
+class DefaultGenerator;
+class TableColumn;
 
 class ComponentVisitor {
 public:
@@ -16,7 +24,14 @@ public:
     ComponentVisitor(const ComponentVisitor& o);
     virtual ~ComponentVisitor();
 
-    virtual void perform(Component* c);
+    virtual void perform(Database* db) = 0;
+    virtual void perform(DataType* t) = 0;
+    virtual void perform(Schema* s) = 0;
+    virtual void perform(Sequence* s) = 0;
+    virtual void perform(Table* t) = 0;
+    virtual void perform(DatabaseConstant* c) = 0;
+    virtual void perform(DefaultGenerator* g) = 0;
+    virtual void perform(TableColumn* c) = 0;
 };
 
 #endif	/* COMPONENTVISITOR_HPP */

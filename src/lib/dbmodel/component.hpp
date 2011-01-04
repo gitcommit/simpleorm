@@ -22,7 +22,7 @@ public:
     virtual String pathString(const String& sep = "/") const;
     virtual void printOn(std::ostream& strm);
 
-    virtual void visit(ComponentVisitor* v);
+    virtual void visit(ComponentVisitor* v) = 0;
 protected:
     virtual Component* setParent(Component* p);
     virtual void remove(Component* c);
