@@ -21,6 +21,8 @@ class TableColumn;
 class NotNullConstraint;
 class UniqueConstraint;
 class PrimaryKeyConstraint;
+class ColumnCheckConstraint;
+class ForeignKeyConstraint;
 
 class ComponentVisitor {
 public:
@@ -39,6 +41,8 @@ public:
     virtual void perform(NotNullConstraint* c) = 0;
     virtual void perform(UniqueConstraint* c) = 0;
     virtual void perform(PrimaryKeyConstraint* c) = 0;
+    virtual void perform(ColumnCheckConstraint* c) = 0;
+    virtual void perform(ForeignKeyConstraint* c) = 0;
 };
 
 #endif	/* COMPONENTVISITOR_HPP */

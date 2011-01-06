@@ -87,8 +87,18 @@ void CrebasVisitor::perform(Database* d) {
         i->second->visit(this);
     }
 
+    ColumnCheckConstraintMap ccm = d->columnCheckConstraints();
+    for (ColumnCheckConstraintMapConstIterator i = ccm.begin(); i != ccm.end(); ++i) {
+        i->second->visit(this);
+    }
+
     PrimaryKeyConstraintMap pcm = d->primaryKeyConstraints();
     for (PrimaryKeyConstraintMapConstIterator i = pcm.begin(); i != pcm.end(); ++i) {
+        i->second->visit(this);
+    }
+
+    ForeignKeyConstraintMap fcm = d->foreignKeyConstraints();
+    for (ForeignKeyConstraintMapConstIterator i = fcm.begin(); i != fcm.end(); ++i) {
         i->second->visit(this);
     }
 }
@@ -153,4 +163,18 @@ void CrebasVisitor::perform(PrimaryKeyConstraint* c) {
     add(command("ALTER TABLE " + c->table()->qualifiedName()
             + " ADD CONSTRAINT " + c->name() + " PRIMARY KEY ("
             + c->joinedColumnNames() + ")"));
+}
+
+void CrebasVisitor::perform(ColumnCheckConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    add(command("ALTER TABLE " + c->tableColumn()->table()->qualifiedName()
+            + " ADD CONSTRAINT " + c->name() + " CHECK (" + c->code() + ")"));
+}
+
+void CrebasVisitor::perform(ForeignKeyConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    add(command("ALTER TABLE " + c->table()->qualifiedName()
+            + " ADD CONSTRAINT " + c->name()
+            + " FOREIGN KEY (" + c->joinedLocalColumnNames() + ")"
+            + " REFERENCES " + c->referencedTable()->qualifiedName() + "(" + c->joinedReferencedColumnNames() + ")"));
 }

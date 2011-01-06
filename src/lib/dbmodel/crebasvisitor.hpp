@@ -14,11 +14,10 @@
 #include <dbmodel/componentvisitor.hpp>
 
 #include <dbmodel/component.hpp>
-
-#include "defaultgenerator.hpp"
-#include "uniqueconstraint.hpp"
-#include "primarykeyconstraint.hpp"
-#include "table.hpp"
+#include <dbmodel/defaultgenerator.hpp>
+#include <dbmodel/uniqueconstraint.hpp>
+#include <dbmodel/primarykeyconstraint.hpp>
+#include <dbmodel/table.hpp>
 
 class Database;
 class DataType;
@@ -42,6 +41,8 @@ public:
     virtual void perform(NotNullConstraint* c);
     virtual void perform(UniqueConstraint* c);
     virtual void perform(PrimaryKeyConstraint* c);
+    virtual void perform(ColumnCheckConstraint* c);
+    virtual void perform(ForeignKeyConstraint* c);
 protected:
     virtual void add(const String& res);
     virtual String comment(const String& s) const;

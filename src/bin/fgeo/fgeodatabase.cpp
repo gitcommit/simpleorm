@@ -33,8 +33,11 @@ FGeoDatabase::FGeoDatabase(const std::string& name)
     _siPrefixes->createUniqueConstraint("u_si_prefixes_factor")->add("factor");
     _siPrefixes->createUniqueConstraint("u_si_prefixes_symbol")->add("symbol");
     _siPrefixes->createPrimaryKeyConstraint("pk_si_prefixes")->add("id");
+    _siPrefixes->column("name")->createCheckConstraint("!= ''", "chk_si_prefixes_name_not_empty");
     
     _units = _core->createTable("units");
+    _units->createTableColumn("id", _int, true)->createDefault(_core->createSequence("seq_units"));
+    _units->createTableColumn("si_prefix_id", _siPrefixes->column("id"), "fk_units_si_prefix_exists", false);
     _unitConversions = _core->createTable("unit_convesions");
 }
 

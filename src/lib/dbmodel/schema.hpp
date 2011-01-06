@@ -42,12 +42,21 @@ public:
     PrimaryKeyConstraint* primaryKeyConstraint(const String& qualifiedName) const;
     PrimaryKeyConstraintMap primaryKeyConstraints() const;
 
+    ForeignKeyConstraint* add(ForeignKeyConstraint* c);
+    ForeignKeyConstraint* foreignKeyConstraint(const String& n) const;
+    ForeignKeyConstraintMap foreignKeyConstraints() const;
+
+    ColumnCheckConstraint* add(ColumnCheckConstraint* c);
+    ColumnCheckConstraint* columnCheckConstraint(const String& name) const;
+    ColumnCheckConstraintMap columnCheckConstraints() const;
 private:
     SequenceMap _sequences;
     TableMap _tables;
     TableColumnMap _tableColumns;
     UniqueConstraintMap _uniqueConstraints;
     PrimaryKeyConstraintMap _primaryKeyConstraints;
+    ForeignKeyConstraintMap _foreignKeyConstraints;
+    ColumnCheckConstraintMap _columnCheckConstraints;
 };
 
 typedef std::map<String, Schema*> SchemaMap;

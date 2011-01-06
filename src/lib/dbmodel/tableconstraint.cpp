@@ -5,11 +5,11 @@
 #include <sstream>
 
 TableConstraint::TableConstraint(Table* t, const String& n)
-: InTableComponent(t, n) {
+: SimpleTableConstraint(t, n) {
 }
 
 TableConstraint::TableConstraint(const TableConstraint& o)
-: InTableComponent(o), _cols(o._cols) {
+: SimpleTableConstraint(o), _cols(o._cols) {
 }
 
 TableConstraint::~TableConstraint() {

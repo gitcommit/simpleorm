@@ -23,6 +23,9 @@ set(libdbmodel_SRC
         tableconstraint.cpp
         uniqueconstraint.cpp
         primarykeyconstraint.cpp
+        columncheckconstraint.cpp
+        foreignkeyconstraint.cpp
+        simpletableconstraint.cpp
 )
 
 INCLUDE_DIRECTORIES(.. . ~/usr/boost/include)

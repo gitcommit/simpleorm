@@ -152,3 +152,35 @@ PrimaryKeyConstraint* Database::primaryKeyConstraint(const String& namePath) con
 PrimaryKeyConstraintMap Database::primaryKeyConstraints() const {
     return _primaryKeyConstraints;
 }
+
+ForeignKeyConstraint* Database::add(ForeignKeyConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    _foreignKeyConstraints.insert(std::make_pair(c->pathString(), c));
+    return foreignKeyConstraint(c->pathString());
+}
+
+ForeignKeyConstraint* Database::foreignKeyConstraint(const String& namePath) const {
+    ForeignKeyConstraintMapConstIterator i = _foreignKeyConstraints.find(namePath);
+    BOOST_ASSERT(i != _foreignKeyConstraints.end());
+    return i->second;
+}
+
+ForeignKeyConstraintMap Database::foreignKeyConstraints() const {
+    return _foreignKeyConstraints;
+}
+
+ColumnCheckConstraint* Database::add(ColumnCheckConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    _columnCheckConstraints.insert(std::make_pair(c->pathString(), c));
+    return columnCheckConstraint(c->pathString());
+}
+
+ColumnCheckConstraint* Database::columnCheckConstraint(const String& name) const {
+    ColumnCheckConstraintMapConstIterator i = _columnCheckConstraints.find(name);
+    BOOST_ASSERT(i != _columnCheckConstraints.end());
+    return i->second;
+}
+
+ColumnCheckConstraintMap Database::columnCheckConstraints() const {
+    return _columnCheckConstraints;
+}

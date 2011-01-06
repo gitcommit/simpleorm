@@ -10,6 +10,10 @@
 
 #include <dbmodel/intablecomponent.hpp>
 
+#include <vector>
+
+#include <dbmodel/columncheckconstraint.hpp>
+
 class DataType;
 class DatabaseConstant;
 class Sequence;
@@ -37,16 +41,25 @@ public:
     virtual bool hasNotNullConstraint() const;
     NotNullConstraint* notNullConstraint() const;
     virtual NotNullConstraint* createNotNullConstraint();
-    
+
+    ColumnCheckConstraint* createCheckConstraint(const String& code, const String& name);
+    ColumnCheckConstraint* add(ColumnCheckConstraint* c);
+    ColumnCheckConstraint* checkConstraint(const String& n) const;
+    ColumnCheckConstraintMap checkConstraints() const;
+
     virtual void visit(ComponentVisitor* v);
 private:
     DataType* _type;
     DefaultGenerator* _defaultGenerator;
     NotNullConstraint* _notNullConstraint;
+    ColumnCheckConstraintMap _checkConstraints;
 };
 
 typedef std::map<String, TableColumn*> TableColumnMap;
 typedef TableColumnMap::const_iterator TableColumnMapConstIterator;
+typedef std::pair<TableColumn*, TableColumn*> TableColumnPair;
+typedef std::vector<TableColumnPair> TableColumnPairVector;
+typedef TableColumnPairVector::const_iterator TableColumnPairVectorConstIterator;
 
 #endif	/* TABLECOLUMN_HPP */
 

@@ -17,6 +17,7 @@
 #include <dbmodel/tablecolumn.hpp>
 #include <dbmodel/uniqueconstraint.hpp>
 #include <dbmodel/primarykeyconstraint.hpp>
+#include <dbmodel/foreignkeyconstraint.hpp>
 
 class PrimaryKeyConstraint;
 typedef std::map<String, PrimaryKeyConstraint*> PrimaryKeyConstraintMap;
@@ -62,6 +63,14 @@ public:
     virtual PrimaryKeyConstraint* primaryKeyConstraint(const String& namePath) const;
     PrimaryKeyConstraintMap primaryKeyConstraints() const;
 
+    virtual ForeignKeyConstraint* add(ForeignKeyConstraint* c);
+    virtual ForeignKeyConstraint* foreignKeyConstraint(const String& namePath) const;
+    ForeignKeyConstraintMap foreignKeyConstraints() const;
+
+    ColumnCheckConstraint* add(ColumnCheckConstraint* c);
+    ColumnCheckConstraint* columnCheckConstraint(const String& name) const;
+    ColumnCheckConstraintMap columnCheckConstraints() const;
+    
     virtual void visit(ComponentVisitor* v);
 private:
     DataTypeMap _dataTypes;
@@ -72,6 +81,8 @@ private:
     TableColumnMap _tableColumns;
     UniqueConstraintMap _uniqueConstraints;
     PrimaryKeyConstraintMap _primaryKeyConstraints;
+    ForeignKeyConstraintMap _foreignKeyConstraints;
+    ColumnCheckConstraintMap _columnCheckConstraints;
 };
 
 #endif	/* DATABASE_HPP */

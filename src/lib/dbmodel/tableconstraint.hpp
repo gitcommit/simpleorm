@@ -8,11 +8,11 @@
 #ifndef TABLECONSTRAINT_HPP
 #define	TABLECONSTRAINT_HPP
 
-#include <dbmodel/intablecomponent.hpp>
+#include <dbmodel/simpletableconstraint.hpp>
 
 class TableColumn;
 
-class TableConstraint: public InTableComponent {
+class TableConstraint: public SimpleTableConstraint {
 public:
     TableConstraint(Table* t, const String& n);
     TableConstraint(const TableConstraint& o);

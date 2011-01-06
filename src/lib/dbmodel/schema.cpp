@@ -112,3 +112,36 @@ PrimaryKeyConstraint* Schema::primaryKeyConstraint(const String& qualifiedName) 
 PrimaryKeyConstraintMap Schema::primaryKeyConstraints() const {
     return _primaryKeyConstraints;
 }
+
+ForeignKeyConstraint* Schema::add(ForeignKeyConstraint* c) {
+    _foreignKeyConstraints.insert(std::make_pair(c->qualifiedName(), c));
+    database()->add(c);
+    return foreignKeyConstraint(c->qualifiedName());
+}
+
+ForeignKeyConstraint* Schema::foreignKeyConstraint(const String& n) const {
+    ForeignKeyConstraintMapConstIterator i = _foreignKeyConstraints.find(n);
+    BOOST_ASSERT(i != _foreignKeyConstraints.end());
+    return i->second;
+}
+
+ForeignKeyConstraintMap Schema::foreignKeyConstraints() const {
+    return _foreignKeyConstraints;
+}
+
+ColumnCheckConstraint* Schema::add(ColumnCheckConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    _columnCheckConstraints.insert(std::make_pair(c->pathString(), c));
+    database()->add(c);
+    return columnCheckConstraint(c->pathString());
+}
+
+ColumnCheckConstraint* Schema::columnCheckConstraint(const String& name) const {
+    ColumnCheckConstraintMapConstIterator i = _columnCheckConstraints.find(name);
+    BOOST_ASSERT(i != _columnCheckConstraints.end());
+    return i->second;
+}
+
+ColumnCheckConstraintMap Schema::columnCheckConstraints() const {
+    return _columnCheckConstraints;
+}

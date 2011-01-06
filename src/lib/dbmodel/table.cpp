@@ -4,9 +4,6 @@
 #include <dbmodel/componentvisitor.hpp>
 #include <boost/assert.hpp>
 
-#include "intablecolumncomponent.hpp"
-#include "primarykeyconstraint.hpp"
-
 Table::Table(Schema* s, const String& n)
 : InSchemaComponent(s, n) {
     s->add(this);
@@ -52,6 +49,13 @@ TableColumn* Table::createTableColumn(const String& name, DataType* t, DatabaseC
 TableColumn* Table::createTableColumn(const String& name, DataType* t, const Numeric& n) {
     TableColumn* c = createTableColumn(name, t);
     c->createDefault(n);
+    return c;
+}
+
+TableColumn* Table::createTableColumn(const String& name, TableColumn* ref, const String& conName, const bool& createNotNullConstraint) {
+    TableColumn* c = createTableColumn(name, ref->type(), createNotNullConstraint);
+    ForeignKeyConstraint* fk = createForeignKeyConstraint(ref->table(), conName);
+    fk->add(c, ref);
     return c;
 }
 
@@ -105,4 +109,43 @@ bool Table::hasPrimaryKeyConstraint() const {
 
 PrimaryKeyConstraint* Table::primaryKeyConstraint() const {
     return _primaryKeyConstraint;
+}
+
+ForeignKeyConstraint* Table::createForeignKeyConstraint(Table* t, const String& name) {
+    BOOST_ASSERT(0 != t);
+    return add(new ForeignKeyConstraint(this, name, t));
+}
+
+ForeignKeyConstraint* Table::add(ForeignKeyConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    _foreignKeyConstraints.insert(std::make_pair(c->name(), c));
+    schema()->add(c);
+    return foreignKeyConstraint(c->name());
+}
+
+ForeignKeyConstraint* Table::foreignKeyConstraint(const String& name) const {
+    ForeignKeyConstraintMapConstIterator i = _foreignKeyConstraints.find(name);
+    BOOST_ASSERT(i != _foreignKeyConstraints.end());
+    return i->second;
+}
+
+ForeignKeyConstraintMap Table::foreignKeyConstraints() const {
+    return _foreignKeyConstraints;
+}
+
+ColumnCheckConstraint* Table::add(ColumnCheckConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    _columnCheckConstraints.insert(std::make_pair(c->name(), c));
+    schema()->add(c);
+    return columnCheckConstraint(c->name());
+}
+
+ColumnCheckConstraint* Table::columnCheckConstraint(const String& name) const {
+    ColumnCheckConstraintMapConstIterator i = _columnCheckConstraints.find(name);
+    BOOST_ASSERT(i != _columnCheckConstraints.end());
+    return i->second;
+}
+
+ColumnCheckConstraintMap Table::columnCheckConstraints() const {
+    return _columnCheckConstraints;
 }

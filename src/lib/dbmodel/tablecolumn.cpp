@@ -87,3 +87,24 @@ NotNullConstraint* TableColumn::createNotNullConstraint() {
     _notNullConstraint = new NotNullConstraint(this);
     return notNullConstraint();
 }
+
+ColumnCheckConstraint* TableColumn::createCheckConstraint(const String& code, const String& name) {
+    return add(new ColumnCheckConstraint(this, name, code));
+}
+
+ColumnCheckConstraint* TableColumn::add(ColumnCheckConstraint* c) {
+    BOOST_ASSERT(0 != c);
+    _checkConstraints.insert(std::make_pair(c->name(), c));
+    table()->add(c);
+    return checkConstraint(c->name());
+}
+
+ColumnCheckConstraint* TableColumn::checkConstraint(const String& n) const {
+    ColumnCheckConstraintMapConstIterator i = _checkConstraints.find(n);
+    BOOST_ASSERT(i != _checkConstraints.end());
+    return i->second;
+}
+
+ColumnCheckConstraintMap TableColumn::checkConstraints() const {
+    return _checkConstraints;
+}

@@ -13,6 +13,7 @@
 #include <dbmodel/tablecolumn.hpp>
 #include <dbmodel/uniqueconstraint.hpp>
 #include <dbmodel/primarykeyconstraint.hpp>
+#include <dbmodel/foreignkeyconstraint.hpp>
 
 class Table: public InSchemaComponent {
 public:
@@ -27,6 +28,8 @@ public:
     TableColumn* createTableColumn(const String& name, DataType* t, const String& txt);
     TableColumn* createTableColumn(const String& name, DataType* t, const Numeric& n);
     TableColumn* createTableColumn(const String& name, DataType* t, Sequence* s);
+    TableColumn* createTableColumn(const String& name, TableColumn* ref, 
+        const String& conName, const bool& createNotNullConstraint=true);
     TableColumn* add(TableColumn* c);
     TableColumn* column(const String& n) const;
     TableColumnMap columns() const;
@@ -40,10 +43,21 @@ public:
     bool hasPrimaryKeyConstraint() const;
     PrimaryKeyConstraint* primaryKeyConstraint() const;
 
+    ForeignKeyConstraint* createForeignKeyConstraint(Table* t, const String& name);
+    ForeignKeyConstraint* add(ForeignKeyConstraint* c);
+    ForeignKeyConstraint* foreignKeyConstraint(const String& name) const;
+    ForeignKeyConstraintMap foreignKeyConstraints() const;
+
+    ColumnCheckConstraint* add(ColumnCheckConstraint* c);
+    ColumnCheckConstraint* columnCheckConstraint(const String& name) const;
+    ColumnCheckConstraintMap columnCheckConstraints() const;
+
 private:
     TableColumnMap _columns;
     UniqueConstraintMap _uniqueConstraints;
     PrimaryKeyConstraint* _primaryKeyConstraint;
+    ForeignKeyConstraintMap _foreignKeyConstraints;
+    ColumnCheckConstraintMap _columnCheckConstraints;
 };
 
 typedef std::map<String, Table*> TableMap;
