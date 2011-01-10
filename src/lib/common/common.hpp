@@ -10,12 +10,14 @@
 
 #include <string>
 #include <vector>
+#include <boost/variant.hpp>
 
 typedef std::string String;
 typedef std::vector<String> StringVector;
 typedef StringVector::const_iterator StringVectorConstIterator;
 typedef StringVector::iterator StringVectorIterator;
 typedef double Numeric;
+typedef long unsigned int Integer;
 
 #endif	/* COMMON_HPP */
 

@@ -7,7 +7,6 @@
 
 DatabaseConstantDefaultGenerator::DatabaseConstantDefaultGenerator(TableColumn* col, DatabaseConstant* c)
 : DefaultGenerator(col), _c(c) {
-    std::cout << std::endl << "constant: " << col->name() << ": " << _c->name() << std::endl;
 }
 
 DatabaseConstantDefaultGenerator::DatabaseConstantDefaultGenerator(const DatabaseConstantDefaultGenerator& o)

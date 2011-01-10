@@ -44,7 +44,6 @@ void TableColumn::visit(ComponentVisitor* v) {
 DefaultGenerator* TableColumn::createDefault(DatabaseConstant* c) {
     BOOST_ASSERT(0 == _defaultGenerator);
     _defaultGenerator = new DatabaseConstantDefaultGenerator(this, c);
-    std::cout << _defaultGenerator->name();
     return defaultGenerator();
 }
 
