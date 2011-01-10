@@ -1,4 +1,4 @@
-#include <omodel/namedentity.hpp>
+#include <orm/namedentity.hpp>
 
 #include <sstream>
 
@@ -16,7 +16,7 @@ NamedEntity::~NamedEntity() {
 }
 
 const bool NamedEntity::hasName() const {
-    return ("" != name());
+    return isNotEmpty(name());
 }
 
 String NamedEntity::name() const {

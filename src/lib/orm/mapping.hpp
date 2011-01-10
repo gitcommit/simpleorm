@@ -1,11 +1,21 @@
 #ifndef MAPPING_H
 #define MAPPING_H
 
+class Table;
+
 class Mapping {
 public:
-    Mapping();
-    Mapping(const Mapping& o);
+    Mapping(Table* t);
     virtual ~Mapping();
+
+    const bool hasTable() const;
+    Table* table() const;
+    void setTable(Table* t);
+
+private:
+    Mapping(const Mapping& o);
+    
+    Table* _table;
 };
 
 #endif // MAPPING_H

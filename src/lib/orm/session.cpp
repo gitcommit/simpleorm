@@ -1,6 +1,6 @@
 #include <orm/session.hpp>
 
-#include <omodel/entity.hpp>
+#include <boost/assert.hpp>
 
 Session::Session() {
 }
@@ -36,4 +36,8 @@ bool Session::contains(Entity* e) const {
         }
     }
     return false;
+}
+
+std::vector<Entity*> Session::entities() const {
+    return _entities;
 }

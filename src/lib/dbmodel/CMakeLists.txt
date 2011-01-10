@@ -1,4 +1,4 @@
-set(libdbmodel_SRC
+set(dbmodel_SRC
 	component.cpp
         componentvisitor.cpp
         database.cpp
@@ -30,4 +30,4 @@ set(libdbmodel_SRC
 
 INCLUDE_DIRECTORIES(.. . ~/usr/boost/include)
 
-add_library(libdbmodel SHARED ${libdbmodel_SRC})
+add_library(dbmodel SHARED ${dbmodel_SRC})

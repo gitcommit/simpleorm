@@ -19,6 +19,8 @@ public:
     virtual void add(Entity* e);
     virtual void remove(Entity* e);
     virtual bool contains(Entity* e) const;
+    std::vector<Entity*> entities() const;
+    
 private:
     Session(const Session& o);
     std::vector<Entity*> _entities;

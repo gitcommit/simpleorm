@@ -8,7 +8,7 @@
 #ifndef IDENTIFIEDENTITY_HPP
 #define	IDENTIFIEDENTITY_HPP
 
-#include <omodel/entity.hpp>
+#include <orm/entity.hpp>
 
 class IdentifiedEntity: public Entity {
 public:

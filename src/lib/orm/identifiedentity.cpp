@@ -1,4 +1,4 @@
-#include <omodel/identifiedentity.hpp>
+#include <orm/identifiedentity.hpp>
 
 #include <sstream>
 
@@ -38,13 +38,11 @@ String IdentifiedEntity::toString() const {
 }
 
 String IdentifiedEntity::idInBrackets(const String& l, const String& r) const {
-    std::stringstream ss;
-    ss << l;
+    std::stringstream ids;
     if (hasId()) {
-        ss << id();
+        ids << id();
     } else {
-        ss << "None";
+        ids << "None";
     }
-    ss << r;
-    return ss.str();
+    return bracket(ids.str());
 }

@@ -6,6 +6,7 @@
 #include <vector>
 
 class Session;
+class Mapping;
 
 class Entity {
 public:
@@ -31,12 +32,20 @@ public:
 
     virtual StringVector path() const;
     virtual String pathString(const String& sep = "/") const;
-    
+
+    virtual Mapping* mapping() const;
+    virtual const bool hasMapping() const;
+    virtual void setMapping(Mapping* m);
+protected:
+    virtual Mapping* createMapping();
+    virtual const bool isNotEmpty(const String& s) const;
+    virtual String bracket(const String& s, const String& left = "[", const String& right = "]") const;
 private:
     Entity(const Entity& o);
     
     Session* _session;
     Entity* _parent;
+    Mapping* _mapping;
     std::vector<Entity*> _children;
 };
 
