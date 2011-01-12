@@ -1,7 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <common/common.hpp>
+#include <common/customtypes.hpp>
 #include <ostream>
 #include <vector>
 
@@ -33,11 +33,8 @@ public:
     virtual StringVector path() const;
     virtual String pathString(const String& sep = "/") const;
 
-    virtual Mapping* mapping() const;
-    virtual const bool hasMapping() const;
-    virtual void setMapping(Mapping* m);
+    virtual Mapping* mapping() const = 0;
 protected:
-    virtual Mapping* createMapping();
     virtual const bool isNotEmpty(const String& s) const;
     virtual String bracket(const String& s, const String& left = "[", const String& right = "]") const;
 private:
@@ -45,7 +42,6 @@ private:
     
     Session* _session;
     Entity* _parent;
-    Mapping* _mapping;
     std::vector<Entity*> _children;
 };
 

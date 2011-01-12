@@ -1,12 +1,12 @@
 #include <orm/entity.hpp>
 
-#include <orm/session.hpp>
-#include <orm/mapping.hpp>
-
 #include <sstream>
 
+#include <boost/assert.hpp>
+#include <orm/session.hpp>
+
 Entity::Entity(Session* s, Entity* p)
-: _session(0), _parent(0), _mapping(0) {
+: _session(0), _parent(0) {
     BOOST_ASSERT(0 != s);
     setSession(s);
     session()->add(this);
@@ -89,10 +89,6 @@ void Entity::setParent(Entity* e) {
         return;
     }
 
-    if (e->hasMapping()) {
-        setMapping(e->mapping());
-    }
-
     if (hasParent()) {
         Entity* parentE = e->parent();
         parentE->removeChild(e);
@@ -136,20 +132,4 @@ String Entity::bracket(const String& s, const String& left, const String& right)
     std::stringstream ss;
     ss << left << s << right;
     return ss.str();
-}
-
-const bool Entity::hasMapping() const {
-    return (0 != mapping());
-}
-
-Mapping* Entity::mapping() const {
-    return _mapping;
-}
-
-void Entity::setMapping(Mapping* m) {
-    _mapping = m;
-}
-
-Mapping* Entity::createMapping() {
-    return 0;
 }

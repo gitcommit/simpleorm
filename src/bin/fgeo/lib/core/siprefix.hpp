@@ -13,7 +13,7 @@
 class SiPrefix: public StandardEntity {
 public:
     SiPrefix(Session* s, const String& name, const String& code,
-            const String& symbol, const Numeric& factor, const String& description,
+            const String& symbol, const Numeric& factor, const String& description = "",
             const Integer& id = 0);
     virtual ~SiPrefix();
 
@@ -25,8 +25,9 @@ public:
     virtual Numeric factor() const;
 
     virtual String toString() const;
-protected:
-    virtual Mapping* createMapping();
+
+    virtual Mapping* mapping() const;
+    
 private:
     String _symbol;
     Numeric _factor;

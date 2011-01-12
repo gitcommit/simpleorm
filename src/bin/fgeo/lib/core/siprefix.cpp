@@ -2,7 +2,12 @@
 
 #include <sstream>
 
+#include <boost/assert.hpp>
+
 #include <orm/mapping.hpp>
+
+#include <fgeosession.hpp>
+
 
 SiPrefix::SiPrefix(Session* s, const String& name, const String& code, const String& symbol, const Numeric& factor, const String& description, const Integer& id)
         : StandardEntity(s, id, name, code, description), _symbol(symbol), _factor(factor) {
@@ -42,6 +47,7 @@ String SiPrefix::toString() const {
     return s.str();
 }
 
-Mapping* SiPrefix::createMapping() {
-    return new Mapping(0);
+Mapping* SiPrefix::mapping() const {
+    BOOST_ASSERT(hasSession());
+    return dynamic_cast<FGeoSession*>(session())->mapping(this);
 }

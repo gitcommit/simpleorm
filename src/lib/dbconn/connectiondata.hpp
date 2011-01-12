@@ -8,19 +8,18 @@
 #ifndef CONNECTIONDATA_HPP
 #define	CONNECTIONDATA_HPP
 
-#include <common/common.hpp>
+#include <common/customtypes.hpp>
 
 class ConnectionData {
 public:
-    ConnectionData(const String& host,
-            const Integer& port,
-            const String& database,
-            const String& user,
-            const String& password,
+    ConnectionData(const String& host = "localhost",
+            const Integer& port = 5432,
+            const String& database = "fgeo",
+            const String& user = "fgeo",
+            const String& password = "changeme",
             const String& driver = "QPSQL7");
-    ConnectionData(const ConnectionData& o);
     virtual ~ConnectionData();
-
+    
     virtual void setHost(const String& h);
     virtual void setPort(const Integer& p);
     virtual void setDatabase(const String& d);
@@ -38,6 +37,8 @@ public:
     virtual String connectionString() const;
     
 private:
+    ConnectionData(const ConnectionData& o);
+
     String _host;
     Integer _port;
     String _database;

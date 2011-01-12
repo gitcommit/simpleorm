@@ -5,7 +5,7 @@ class Table;
 
 class Mapping {
 public:
-    Mapping(Table* t);
+    Mapping(Table* t = 0);
     virtual ~Mapping();
 
     const bool hasTable() const;

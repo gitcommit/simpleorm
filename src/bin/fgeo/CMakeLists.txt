@@ -2,6 +2,7 @@ set(fgeo_SRC
 	main.cpp
         fgeodatabase.cpp
         fgeoapplication.cpp
+        fgeosession.cpp
 
         lib/core/siprefix.cpp
 )

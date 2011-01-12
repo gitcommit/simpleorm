@@ -1,16 +1,15 @@
 /* 
- * File:   common.hpp
+ * File:   custom_types.hpp
  * Author: jolo
  *
  * Created on 29. Dezember 2010, 17:27
  */
 
-#ifndef COMMON_HPP
-#define	COMMON_HPP
+#ifndef CUSTOM_TYPES_HPP
+#define	CUSTOM_TYPES_HPP
 
 #include <string>
 #include <vector>
-#include <boost/variant.hpp>
 
 typedef std::string String;
 typedef std::vector<String> StringVector;
@@ -19,5 +18,5 @@ typedef StringVector::iterator StringVectorIterator;
 typedef double Numeric;
 typedef long unsigned int Integer;
 
-#endif	/* COMMON_HPP */
+#endif	/* CUSTOM_TYPES_HPP */
 

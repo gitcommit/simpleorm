@@ -3,7 +3,7 @@
 
 #include <map>
 
-#include <common/common.hpp>
+#include <common/customtypes.hpp>
 
 class ComponentVisitor;
 
