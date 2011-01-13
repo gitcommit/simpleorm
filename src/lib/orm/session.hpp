@@ -34,7 +34,14 @@ public:
     virtual Mapping* createMapping(const String& mappingName);
     virtual Mapping* add(const String& mappingName, Mapping* m);
     virtual Mapping* mappingByName(const String& mappingName) const;
-    
+
+    virtual void deleteFromDatabase(Entity* e);
+    virtual void reload(Entity* e);
+    virtual void insert(Entity* e);
+    virtual void update(Entity* e);
+
+protected:
+    virtual void debugEntity(Entity* e);
 private:
     Session(const Session& o);
     std::vector<Entity*> _entities;

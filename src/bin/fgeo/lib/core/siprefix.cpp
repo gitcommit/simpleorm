@@ -10,7 +10,7 @@
 
 
 SiPrefix::SiPrefix(Session* s, const String& name, const String& code, const String& symbol, const Numeric& factor, const String& description, const Integer& id)
-        : StandardEntity(s, id, name, code, description), _symbol(symbol), _factor(factor) {
+        : StandardEntity(s, id, name, code, description) {
     setSymbol(symbol);
     setFactor(factor);
 }
@@ -26,19 +26,19 @@ const bool SiPrefix::hasFactor() const {
 }
 
 void SiPrefix::setSymbol(const String& s) {
-    _symbol = s;
+    setProperty("symbol", s);
 }
 
 void SiPrefix::setFactor(const Numeric& f) {
-    _factor = f;
+    setProperty("factor", f);
 }
 
 String SiPrefix::symbol() const {
-    return _symbol;
+    return property("symbol").toString();
 }
 
 Numeric SiPrefix::factor() const {
-    return _factor;
+    return property("factor").toNumeric();
 }
 
 String SiPrefix::toString() const {

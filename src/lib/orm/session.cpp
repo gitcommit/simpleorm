@@ -1,9 +1,14 @@
 #include <orm/session.hpp>
 
+#include <iostream>
+
 #include <boost/assert.hpp>
 
 #include <orm/mapping.hpp>
 #include <dbconn/conn.hpp>
+
+#include <orm/entity.hpp>
+#include <orm/property.hpp>
 
 Session::Session()
 : _conn(0) {
@@ -76,4 +81,31 @@ Mapping* Session::mappingByName(const String& mappingName) const {
     std::map<String, Mapping*>::const_iterator i = _mappings.find(mappingName);
     BOOST_ASSERT(i != _mappings.end());
     return i->second;
+}
+
+
+void Session::deleteFromDatabase(Entity* e) {
+    std::cout << "Session::deleteFromDatabase(" << *e << ")" << std::endl;
+}
+
+void Session::reload(Entity* e) {
+    std::cout << "Session::reload(" << *e << ")" << std::endl;
+}
+
+void Session::insert(Entity* e) {
+    std::cout << "Session::insert(" << *e << ")" << std::endl;
+    debugEntity(e);
+}
+
+void Session::update(Entity* e) {
+    std::cout << "Session::update(" << *e << ")" << std::endl;
+}
+
+void Session::debugEntity(Entity* e) {
+    std::cout << "Entity:" << std::endl;
+    StringVector pnv = e->propertyNames();
+    for (StringVectorConstIterator i = pnv.begin(); i != pnv.end(); ++i) {
+        Property p = e->property(*i);
+        std::cout << "\t" << p << std::endl;
+    }
 }

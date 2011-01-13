@@ -20,10 +20,11 @@ public:
     virtual void setId(const Integer& id);
     virtual const Integer id() const;
 
+    virtual void persist();
+
     virtual String toString() const;
+protected:
     virtual String idInBrackets(const String& leftBracket = "[", const String& rightBracket = "]") const;
-private:
-    Integer _id;
 };
 
 #endif	/* IDENTIFIEDENTITY_HPP */

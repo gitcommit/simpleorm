@@ -26,9 +26,6 @@ public:
 
 protected:
     virtual String codeInBrackets(const String& left = "{", const String& right = "}") const;
-private:
-    String _code;
-    String _description;
 };
 
 #endif	/* STANDARDENTITY_HPP */

@@ -5,6 +5,7 @@ set(orm_SRC
         namedentity.cpp
         standardentity.cpp
         session.cpp
+        property.cpp
 
 )
 

@@ -5,6 +5,8 @@
 #include <ostream>
 #include <vector>
 
+#include <orm/property.hpp>
+
 class Session;
 class Mapping;
 
@@ -34,7 +36,26 @@ public:
     virtual String pathString(const String& sep = "/") const;
 
     virtual Mapping* mapping() const = 0;
+
+    virtual void persist() = 0;
+    virtual void deleteFromDatabase();
+    virtual void reload();
+
+    virtual void setProperty(const String& name, const boost::any& value);
+    virtual void setProperty(const String& name, const String& value);
+    virtual void setProperty(const String& name, const Integer& value);
+    virtual void setProperty(const String& name, const Numeric& value);
+    virtual void setProperty(const Property& p);
+
+    virtual Property property(const String& name) const;
+    virtual const bool hasProperty(const String& name) const;
+    virtual PropertyMap properties() const;
+    virtual StringVector propertyNames() const;
+
 protected:
+    virtual void insert();
+    virtual void update();
+    
     virtual const bool isNotEmpty(const String& s) const;
     virtual String bracket(const String& s, const String& left = "[", const String& right = "]") const;
 private:
@@ -43,6 +64,8 @@ private:
     Session* _session;
     Entity* _parent;
     std::vector<Entity*> _children;
+
+    PropertyMap _properties;
 };
 
 std::ostream& operator<<(std::ostream& strm, Entity& e);

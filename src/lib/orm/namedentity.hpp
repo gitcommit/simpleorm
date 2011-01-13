@@ -22,8 +22,6 @@ public:
     virtual void setName(const String& n);
 
     virtual String toString() const;
-private:
-    String _name;
 };
 
 #endif	/* NAMEDENTITY_HPP */

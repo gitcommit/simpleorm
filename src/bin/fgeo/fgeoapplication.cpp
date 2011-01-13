@@ -47,6 +47,7 @@ Integer FGeoApplication::exec() {
     std::vector<Entity*> entities = session()->entities();
     for (std::vector<Entity*>::const_iterator i = entities.begin(); i != entities.end(); ++i) {
         std::cout << (*i)->pathString() << " --> " << (*i)->mapping()->table()->qualifiedName() << std::endl;
+        (*i)->persist();
     }
     return 0;
 }

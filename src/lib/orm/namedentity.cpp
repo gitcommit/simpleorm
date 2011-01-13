@@ -3,12 +3,12 @@
 #include <sstream>
 
 NamedEntity::NamedEntity(Session* s, const Integer& id, const String& name)
-: IdentifiedEntity(s, id), _name(name) {
+: IdentifiedEntity(s, id) {
     setName(name);
 }
 
 NamedEntity::NamedEntity(NamedEntity* p, const Integer& id, const String& name)
-: IdentifiedEntity(p, id), _name(name) {
+: IdentifiedEntity(p, id) {
     setName(name);
 }
 
@@ -20,11 +20,11 @@ const bool NamedEntity::hasName() const {
 }
 
 String NamedEntity::name() const {
-    return _name;
+    return property("name").toString();
 }
 
 void NamedEntity::setName(const String& n) {
-    _name = n;
+    setProperty("name", n);
 }
 
 String NamedEntity::toString() const {

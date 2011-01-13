@@ -1,6 +1,7 @@
 #include <orm/entity.hpp>
 
 #include <sstream>
+#include <iostream>
 
 #include <boost/assert.hpp>
 #include <orm/session.hpp>
@@ -46,11 +47,6 @@ String Entity::toString() const {
 
 void Entity::printOn(std::ostream& s) {
     s << toString();
-}
-
-std::ostream& operator<<(std::ostream& strm, Entity& e) {
-    e.printOn(strm);
-    return strm;
 }
 
 Entity* Entity::parent() const {
@@ -132,4 +128,70 @@ String Entity::bracket(const String& s, const String& left, const String& right)
     std::stringstream ss;
     ss << left << s << right;
     return ss.str();
+}
+
+void Entity::insert() {
+    session()->insert(this);
+}
+
+void Entity::update() {
+    session()->update(this);
+}
+
+void Entity::deleteFromDatabase() {
+    session()->deleteFromDatabase(this);
+}
+
+void Entity::reload() {
+    session()->reload(this);
+}
+
+void Entity::setProperty(const String& name, const boost::any& value) {
+    setProperty(Property(this, name, value));
+}
+
+void Entity::setProperty(const String& name, const String& value) {
+    setProperty(name, boost::any(value));
+}
+
+void Entity::setProperty(const String& name, const Integer& value) {
+    boost::any v = value;
+    setProperty(name, v);
+}
+
+void Entity::setProperty(const String& name, const Numeric& value) {
+    boost::any v = value;
+    setProperty(name, v);
+}
+
+void Entity::setProperty(const Property& p) {
+    _properties.insert(std::make_pair(p.name(), p));
+}
+
+Property Entity::property(const String& name) const {
+    BOOST_ASSERT(hasProperty(name));
+    PropertyMapConstIterator i = _properties.find(name);
+    BOOST_ASSERT(_properties.end() != i);
+    return i->second;
+}
+
+const bool Entity::hasProperty(const String& name) const {
+    return (_properties.end() != _properties.find(name));
+}
+
+PropertyMap Entity::properties() const {
+    return _properties;
+}
+
+StringVector Entity::propertyNames() const {
+    StringVector nl;
+    for (PropertyMapConstIterator i = _properties.begin(); i != _properties.end(); ++i) {
+        nl.push_back(i->first);
+    }
+    return nl;
+}
+
+std::ostream& operator<<(std::ostream& strm, Entity& e) {
+    e.printOn(strm);
+    return strm;
 }

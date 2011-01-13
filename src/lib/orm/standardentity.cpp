@@ -3,13 +3,13 @@
 #include <sstream>
 
 StandardEntity::StandardEntity(Session* s, const Integer& id, const String& name, const String& code, const String& description)
-        : NamedEntity(s, id, name), _code(""), _description("") {
+        : NamedEntity(s, id, name) {
     setCode(code);
     setDescription(description);
 }
 
 StandardEntity::StandardEntity(StandardEntity* p, const Integer& id, const String& name, const String& code, const String& description)
-        : NamedEntity(p, id, name), _code(""), _description("") {
+        : NamedEntity(p, id, name) {
     setCode(code);
     setDescription(description);
 }
@@ -25,19 +25,19 @@ const bool StandardEntity::hasDescription() const {
 }
 
 void StandardEntity::setCode(const String& code) {
-    _code = code;
+    setProperty("code", code);
 }
 
 void StandardEntity::setDescription(const String& description) {
-    _description = description;
+    setProperty("description", description);
 }
 
 String StandardEntity::code() const {
-    return _code;
+    return property("code").toString();
 }
 
 String StandardEntity::description() const {
-    return _description;
+    return property("description").toString();
 }
 
 String StandardEntity::toString() const {

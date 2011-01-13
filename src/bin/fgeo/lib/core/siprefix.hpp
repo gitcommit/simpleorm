@@ -27,10 +27,6 @@ public:
     virtual String toString() const;
 
     virtual Mapping* mapping() const;
-    
-private:
-    String _symbol;
-    Numeric _factor;
 };
 
 #endif	/* SIPREFIX_HPP */
