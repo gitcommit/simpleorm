@@ -1,6 +1,8 @@
 set(dbconn_SRC
 	conn.cpp
         connectiondata.cpp
+        query.cpp
+        insertquery.cpp
 )
 
 INCLUDE_DIRECTORIES(.. . ~/usr/boost/include)

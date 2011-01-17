@@ -9,6 +9,7 @@
 #include <dbmodel/crebasvisitor.hpp>
 #include <orm/session.hpp>
 #include <orm/mapping.hpp>
+#include <orm/mappedproperty.hpp>
 
 #include <dbconn/conn.hpp>
 
@@ -47,6 +48,10 @@ Integer FGeoApplication::exec() {
     std::vector<Entity*> entities = session()->entities();
     for (std::vector<Entity*>::const_iterator i = entities.begin(); i != entities.end(); ++i) {
         std::cout << (*i)->pathString() << " --> " << (*i)->mapping()->table()->qualifiedName() << std::endl;
+        std::map<String, MappedProperty*> mpl = (*i)->mapping()->mappedProperties();
+        for (std::map<String, MappedProperty*>::const_iterator ii = mpl.begin(); ii != mpl.end(); ++ii) {
+            std::cout << "\t" << ii->first << " --> " << ii->second->column()->qualifiedName() << std::endl;
+        }
         (*i)->persist();
     }
     return 0;

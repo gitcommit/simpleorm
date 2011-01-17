@@ -1,12 +1,14 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <common/customtypes.hpp>
 #include <ostream>
 #include <vector>
 
+#include <common/customtypes.hpp>
+
 #include <orm/property.hpp>
 
+class EntityVisitor;
 class Session;
 class Mapping;
 
@@ -36,6 +38,7 @@ public:
     virtual String pathString(const String& sep = "/") const;
 
     virtual Mapping* mapping() const = 0;
+    virtual const bool hasMapping() const;
 
     virtual void persist() = 0;
     virtual void deleteFromDatabase();
@@ -52,6 +55,8 @@ public:
     virtual PropertyMap properties() const;
     virtual StringVector propertyNames() const;
 
+    virtual void visit(EntityVisitor* v);
+    
 protected:
     virtual void insert();
     virtual void update();

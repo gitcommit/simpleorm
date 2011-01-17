@@ -10,6 +10,8 @@
 #include <orm/entity.hpp>
 #include <orm/property.hpp>
 
+#include "insertvisitor.hpp"
+
 Session::Session()
 : _conn(0) {
 }
@@ -68,8 +70,8 @@ const bool Session::hasMapping(const String& mappingName) const {
     return (_mappings.find(mappingName) != _mappings.end());
 }
 
-Mapping* Session::createMapping(const String& mappingName) {
-    return add(mappingName, new Mapping());
+Mapping* Session::createMapping(const String& mappingName, Table* t) {
+    return add(mappingName, new Mapping(t));
 }
 
 Mapping* Session::add(const String& mappingName, Mapping* m) {
@@ -103,9 +105,12 @@ void Session::update(Entity* e) {
 
 void Session::debugEntity(Entity* e) {
     std::cout << "Entity:" << std::endl;
+    InsertVisitor iv;
+    e->visit(&iv);
     StringVector pnv = e->propertyNames();
     for (StringVectorConstIterator i = pnv.begin(); i != pnv.end(); ++i) {
         Property p = e->property(*i);
         std::cout << "\t" << p << std::endl;
     }
+        std::cout << "\tInsert Visitor: " << iv.query()->sql() << std::endl;
 }

@@ -25,7 +25,15 @@ Mapping* FGeoSession::mapping(const SiPrefix* o) {
         return mappingByName(mn);
     }
 
-    Mapping* m = createMapping(mn);
-    m->setTable(connection()->database()->table("core.si_prefixes"));
+    Table* t = connection()->database()->table("core.si_prefixes");
+    Mapping* m = createMapping(mn, t);
+
+    m->createProperty("id", t->column("id"));
+    m->createProperty("name", t->column("name"));
+    m->createProperty("code", t->column("code"));
+    m->createProperty("symbol", t->column("symbol"));
+    m->createProperty("description", t->column("description"));
+    m->createProperty("factor", t->column("factor"));
+    
     return mapping(o);
 }

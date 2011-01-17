@@ -9,12 +9,14 @@
 #define	CUSTOM_TYPES_HPP
 
 #include <string>
+#include <sstream>
 #include <vector>
 
 typedef std::string String;
 typedef std::vector<String> StringVector;
 typedef StringVector::const_iterator StringVectorConstIterator;
 typedef StringVector::iterator StringVectorIterator;
+typedef std::stringstream StringStream;
 typedef double Numeric;
 typedef long unsigned int Integer;
 

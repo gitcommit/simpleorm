@@ -4,7 +4,9 @@
 #include <iostream>
 
 #include <boost/assert.hpp>
+
 #include <orm/session.hpp>
+#include <orm/entityvisitor.hpp>
 
 Entity::Entity(Session* s, Entity* p)
 : _session(0), _parent(0) {
@@ -194,4 +196,12 @@ StringVector Entity::propertyNames() const {
 std::ostream& operator<<(std::ostream& strm, Entity& e) {
     e.printOn(strm);
     return strm;
+}
+
+void Entity::visit(EntityVisitor* v) {
+    v->perform(this);
+}
+
+const bool Entity::hasMapping() const {
+    return (0 != mapping());
 }

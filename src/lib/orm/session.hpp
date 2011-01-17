@@ -16,6 +16,7 @@
 class Entity;
 class Conn;
 class Mapping;
+class Table;
 
 class Session {
 public:
@@ -31,7 +32,7 @@ public:
     virtual Conn* connection() const;
 
     virtual const bool hasMapping(const String& mappingName) const;
-    virtual Mapping* createMapping(const String& mappingName);
+    virtual Mapping* createMapping(const String& mappingName, Table* t = 0);
     virtual Mapping* add(const String& mappingName, Mapping* m);
     virtual Mapping* mappingByName(const String& mappingName) const;
 
