@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <boost/assert.hpp>
+
 #include <fgeodatabase.hpp>
 #include <fgeosession.hpp>
 
@@ -48,11 +50,26 @@ Integer FGeoApplication::exec() {
     std::vector<Entity*> entities = session()->entities();
     for (std::vector<Entity*>::const_iterator i = entities.begin(); i != entities.end(); ++i) {
         std::cout << (*i)->pathString() << " --> " << (*i)->mapping()->table()->qualifiedName() << std::endl;
-        std::map<String, MappedProperty*> mpl = (*i)->mapping()->mappedProperties();
-        for (std::map<String, MappedProperty*>::const_iterator ii = mpl.begin(); ii != mpl.end(); ++ii) {
-            std::cout << "\t" << ii->first << " --> " << ii->second->column()->qualifiedName() << std::endl;
+        std::vector<MappedProperty*> mpl = (*i)->mapping()->mappedProperties();
+        for (std::vector<MappedProperty*>::const_iterator ii = mpl.begin(); ii != mpl.end(); ++ii) {
+            std::cout << "\t" << (*ii)->propertyName() << " --> " << (*ii)->column()->qualifiedName() << std::endl;
         }
         (*i)->persist();
     }
+
+    std::cout << "connecting..." << std::endl;
+
+    bool res = connection()->connect(settings()->connectionData());
+    BOOST_ASSERT(res);
+    connection()->begin();
+    connection()->commit();
+    connection()->begin();
+    connection()->rollback();
+    
+    std::cout << "disconnecting..." << std::endl;
+    res = connection()->disconnect();
+    BOOST_ASSERT(res);
+    std::cout << "done." << std::endl;
+    
     return 0;
 }

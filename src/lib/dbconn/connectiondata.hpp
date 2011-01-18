@@ -33,6 +33,7 @@ public:
     String user() const;
     String password() const;
     String driver() const;
+    Integer connectTimeout() const;
     
     virtual String connectionString() const;
     
@@ -45,6 +46,7 @@ private:
     String _user;
     String _password;
     String _driver;
+    Integer _connectTimeout;
 };
 
 #endif	/* CONNECTIONDATA_HPP */

@@ -9,6 +9,8 @@
 #include <orm/mapping.hpp>
 #include <dbmodel/table.hpp>
 
+#include "MappedProperty.hpp"
+
 InsertVisitor::InsertVisitor()
 : PersistanceVisitor() {
 }
@@ -32,16 +34,17 @@ void InsertVisitor::perform(Entity* e) {
     StringStream ss;
     StringStream colNames;
     StringStream placeholders;
+    
+    StringVector propertyNames = e->mapping()->propertyNames();
 
-    TableColumnMap columns = e->mapping()->table()->columns();
-
-    for (TableColumnMapConstIterator i = columns.begin(); i != columns.end(); ++i) {
-        if (columns.begin() != i) {
+    for (StringVectorConstIterator i = propertyNames.begin(); i != propertyNames.end(); ++i) {
+        if (propertyNames.begin() != i) {
             colNames << ", ";
             placeholders << ", ";
         }
-        colNames << i->second->name();
-        placeholders << ":" << i->second->name();
+        colNames << m->mappedProperty(*i)->column()->name();
+        placeholders << ":" << m->mappedProperty(*i)->propertyName();
+        query()->addValue(*i, e->property(*i).toString());
     }
     ss << "INSERT INTO " << e->mapping()->table()->qualifiedName()
             << "(" << colNames.str() << ") VALUES (" << placeholders.str() << ")";

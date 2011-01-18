@@ -54,6 +54,24 @@ MappedProperty* Mapping::createProperty(const String& propertyName, TableColumn*
     return add(new MappedProperty(this, propertyName, col));
 }
 
-std::map<String, MappedProperty*> Mapping::mappedProperties() const {
+std::map<String, MappedProperty*> Mapping::mappedPropertiesMap() const {
     return _mappedProperties;
+}
+
+StringVector Mapping::propertyNames() const {
+    StringVector v;
+    for (std::map<String, MappedProperty*>::const_iterator i = _mappedProperties.begin();
+            i != _mappedProperties.end(); ++i) {
+        v.push_back(i->first);
+    }
+    return v;
+}
+
+std::vector<MappedProperty*> Mapping::mappedProperties() const {
+    std::vector<MappedProperty*> v;
+    for (std::map<String, MappedProperty*>::const_iterator i = _mappedProperties.begin();
+            i != _mappedProperties.end(); ++i) {
+        v.push_back(i->second);
+    }
+    return v;
 }

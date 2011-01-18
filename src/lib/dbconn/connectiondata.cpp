@@ -10,7 +10,8 @@ _port(port),
 _database(database),
 _user(user),
 _password(password),
-_driver(driver) {
+_driver(driver),
+_connectTimeout(3) {
 }
 
 ConnectionData::ConnectionData(const ConnectionData& o) {
@@ -69,8 +70,16 @@ String ConnectionData::driver() const {
 
 String ConnectionData::connectionString() const {
     std::stringstream ss;
-    ss << driver() << "://" << user() << ":" << password()
-            << "@" << host() << ":" << port()
-            << "/" << database();
+    ss << "host='" << host() + "' "
+       << "port='" << port() << "' "
+       << "dbname='" << database() << "' "
+       << "user='" << user() << "' "
+       << "password='" << password() << "' "
+       << "connect_timeout='" << connectTimeout() << "'";
+    
     return ss.str();
+}
+
+Integer ConnectionData::connectTimeout() const {
+    return _connectTimeout;
 }

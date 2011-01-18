@@ -10,6 +10,8 @@
 
 #include <common/customtypes.hpp>
 
+#include <map>
+
 class Session;
 
 class Query {
@@ -20,9 +22,14 @@ public:
 
     virtual void setSql(const String& sql);
     virtual String sql() const;
+    virtual void addValue(const String& key, const String& value);
+    std::map<String, String> values() const;
+    std::vector<String> keys() const;
+    String value(const String& key) const;
 private:
     Session* _session;
     String _sql;
+    std::map<String, String> _values;
 };
 
 #endif	/* QUERY_HPP */

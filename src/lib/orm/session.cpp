@@ -112,5 +112,9 @@ void Session::debugEntity(Entity* e) {
         Property p = e->property(*i);
         std::cout << "\t" << p << std::endl;
     }
-        std::cout << "\tInsert Visitor: " << iv.query()->sql() << std::endl;
+    std::cout << "INSERT Visitor: " << std::endl << "\t" << iv.query()->sql() << std::endl;
+    StringVector valueKeys = iv.query()->keys();
+    for (StringVector::const_iterator i = valueKeys.begin(); i != valueKeys.end(); ++i) {
+        std::cout << "\t\t" << *i << ": " << iv.query()->value(*i) << std::endl;
+    }
 }

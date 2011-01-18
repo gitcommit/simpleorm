@@ -6,10 +6,11 @@ set(fgeo_SRC
 
         lib/core/siprefix.cpp
 )
-INCLUDE_DIRECTORIES(../../lib . .. ~/usr/boost/include)
+INCLUDE_DIRECTORIES(../../lib . .. ~/usr/boost/include ~/usr/postgres/git/include)
+LINK_DIRECTORIES(~/usr/postgres/git/lib)
 
 ADD_EXECUTABLE(fgeo ${fgeo_SRC})
 
-TARGET_LINK_LIBRARIES(fgeo orm dbmodel dbconn app)
+TARGET_LINK_LIBRARIES(fgeo orm dbmodel dbconn app pq)
 
 add_dependencies(fgeo orm dbmodel dbconn app)

@@ -23,7 +23,9 @@ public:
     virtual const bool hasMappedProperty(const String& propertyName) const;
     virtual const bool hasMappedProperty(TableColumn* col) const;
     MappedProperty* mappedProperty(const String& propertyName) const;
-    std::map<String, MappedProperty*> mappedProperties() const;
+    std::map<String, MappedProperty*> mappedPropertiesMap() const;
+    StringVector propertyNames() const;
+    std::vector<MappedProperty*> mappedProperties() const;
 private:
     Mapping(const Mapping& o);
     

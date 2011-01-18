@@ -13,7 +13,8 @@ set(orm_SRC
 
 )
 
-INCLUDE_DIRECTORIES(.. . ~/usr/boost/include)
+INCLUDE_DIRECTORIES(.. . ~/usr/boost/include ~/usr/postgres/git/include)
+LINK_DIRECTORIES(~/usr/postgres/git/lib)
 
 add_library(orm SHARED ${orm_SRC})
 TARGET_LINK_LIBRARIES(orm dbconn dbmodel)
