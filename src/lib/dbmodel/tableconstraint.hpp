@@ -22,7 +22,7 @@ public:
     TableColumn* add(const String& colName);
     std::vector<TableColumn*> columns() const;
     StringVector columnNames() const;
-    String joinedColumnNames(const String& sep = ".") const;
+    String joinedColumnNames(const String& sep = ",") const;
 private:
     std::vector<TableColumn*> _cols;
 };

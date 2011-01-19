@@ -37,7 +37,7 @@ String TableConstraint::joinedColumnNames(const String& sep) const {
     StringVector v = columnNames();
     for (StringVector::const_iterator i = v.begin(); i != v.end(); ++i) {
         if (i != v.begin()) {
-            s << sep;
+            s << sep << " ";
         }
         s << (*i);
     }

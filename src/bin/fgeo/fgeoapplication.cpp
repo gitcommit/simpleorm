@@ -64,6 +64,10 @@ Integer FGeoApplication::exec() {
     connection()->begin();
     connection()->commit();
     connection()->begin();
+    StringVector sql = crebas.result();
+    for (StringVectorConstIterator i = sql.begin(); i != sql.end(); ++i) {
+        connection()->execDML(*i);
+    }
     connection()->rollback();
     
     std::cout << "disconnecting..." << std::endl;

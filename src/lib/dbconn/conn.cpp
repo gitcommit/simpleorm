@@ -81,3 +81,18 @@ const bool Conn::execTransactionCommand(const String& cmd) {
     PQclear(res);
     return true;
 }
+
+const bool Conn::execDML(const String& cmd) {
+    std::cout << "executing: " << cmd << std::endl;
+    PGresult* res = PQexec(_c, cmd.c_str());
+    if (PQresultStatus(res) == PGRES_EMPTY_QUERY) {
+        return true;
+    }
+    if (PQresultStatus(res) != PGRES_COMMAND_OK) {
+        String msg = PQerrorMessage(_c);
+        PQclear(res);
+        throw Error(msg);
+    }
+    PQclear(res);
+    return true;
+}

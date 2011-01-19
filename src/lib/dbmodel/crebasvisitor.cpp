@@ -50,7 +50,7 @@ void CrebasVisitor::add(const String& res) {
 
 void CrebasVisitor::perform(Database* d) {
     BOOST_ASSERT(0 != d);
-    add(command("CREATE DATABASE " + d->name()));
+    add(comment("CREATE DATABASE " + d->name()));
 
     DataTypeMap dtm = d->dataTypes();
     for (DataTypeMapConstIterator i = dtm.begin(); i != dtm.end(); ++i) {
@@ -168,7 +168,8 @@ void CrebasVisitor::perform(PrimaryKeyConstraint* c) {
 void CrebasVisitor::perform(ColumnCheckConstraint* c) {
     BOOST_ASSERT(0 != c);
     add(command("ALTER TABLE " + c->tableColumn()->table()->qualifiedName()
-            + " ADD CONSTRAINT " + c->name() + " CHECK (" + c->code() + ")"));
+            + " ADD CONSTRAINT " + c->name() + " CHECK ("
+            + c->tableColumn()->name() + " " + c->code() + ")"));
 }
 
 void CrebasVisitor::perform(ForeignKeyConstraint* c) {

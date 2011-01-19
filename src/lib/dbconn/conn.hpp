@@ -28,6 +28,8 @@ public:
     virtual const bool savepoint(const String& name);
     virtual const bool rollbackTo(const String& savepoint);
 
+    virtual const bool execDML(const String& cmd);
+
 protected:
     virtual const bool execTransactionCommand(const String& cmd);
 

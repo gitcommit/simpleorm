@@ -4,7 +4,7 @@
 #include <dbmodel/table.hpp>
 
 ColumnCheckConstraint::ColumnCheckConstraint(TableColumn* c, const String& name, const String& code)
-: ColumnConstraint(c, name) {
+: ColumnConstraint(c, name), _code(code) {
     c->add(this);
 }
 
